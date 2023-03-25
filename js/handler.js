@@ -11,8 +11,22 @@ const RANDOM_START_STATE = true;
 const WINDOW_WIDTH_IN_CELLS = canvas.width / CELL_SIZE
 const WINDOW_HEIGHT_IN_CELLS = canvas.height / CELL_SIZE
 
+let cell_permutations_enabled = false;
 let inital_generation = true;
-let updated_cells;
+let updated_cells = [];
+
+window.addEventListener("keydown", checkKeyPressed, false);
+
+function checkKeyPressed(event) {
+    if (event.keyCode == "32") {
+        // Enable cell permutations if the space key is pressed.
+        cell_permutations_enabled = true;
+    } else if (event.keyCode == "9") {
+        // Disaable cell permutations if the tab key is pressed.
+        cell_permutations_enabled = false;
+    }
+}
+
 
 function generateEmptyBoard() {
     let new_board = []
@@ -135,7 +149,9 @@ function permutate() {
 
 function main() {
     drawCells();
-    permutate();
+    if (cell_permutations_enabled) {
+        permutate();
+    }
 }
 
 let board = generateEmptyBoard();
