@@ -21,19 +21,31 @@ let updated_cells = [];
 
 window.addEventListener("keydown", checkKeyPressed, false);
 
+function randomBoard() {
+    inital_generation = true;
+    random_state = true;
+    board = generateEmptyBoard();
+    drawCells();
+}
+
+function startGenerations() {
+    cell_permutations_enabled = true;
+}
+
+function stopGenerations() {
+    cell_permutations_enabled = false;
+}
+
 function checkKeyPressed(event) {
     if (event.keyCode == "32") {
         // Enable cell permutations if the space key is pressed.
-        cell_permutations_enabled = true;
+        startGenerations();
     } else if (event.keyCode == "9") {
         // Disable cell permutations if the tab key is pressed.
-        cell_permutations_enabled = false;
+        stopGenerations();
     } else if (event.keyCode == "82") {
         // Randomly regenerate the entire board if the R key is pressed.
-        inital_generation = true;
-        random_state = true;
-        board = generateEmptyBoard();
-        drawCells();
+        randomBoard();
     } else if (event.keyCode == "83") {
         // Permutate the board exactly once.
         permutate();
