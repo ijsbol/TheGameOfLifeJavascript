@@ -1,9 +1,10 @@
 // Edit these.
-const CELL_SIZE = 10;
-const DELAY_BETWEEN_GENERATIONS_IN_MILLISECONDS = 10;
+const CELL_SIZE = 2;
+const DELAY_BETWEEN_GENERATIONS_IN_MILLISECONDS = 1;
 
 
 var canvas = document.getElementById("myCanvas");
+var fpsCounter = document.getElementById("fps");
 var ctx = canvas.getContext("2d");
 
 const CELL_ALIVE_STATES = [true, false];
@@ -11,6 +12,9 @@ const WINDOW_WIDTH_IN_CELLS = canvas.width / CELL_SIZE
 const WINDOW_HEIGHT_IN_CELLS = canvas.height / CELL_SIZE
 const ALIVE_CELL_COLOUR = "white";
 const DEAD_CELL_COLOUR = "black";
+
+const currentDate = new Date();
+const timestamp = currentDate.getTime();
 
 let cell_permutations_enabled = false;
 let inital_generation = true;
@@ -36,6 +40,10 @@ function stopGenerations() {
     cell_permutations_enabled = false;
 }
 
+function stepGeneration() {
+    permutate();
+}
+
 function checkKeyPressed(event) {
     if (event.keyCode == "32") {
         // Enable cell permutations if the space key is pressed.
@@ -48,7 +56,7 @@ function checkKeyPressed(event) {
         randomBoard();
     } else if (event.keyCode == "83") {
         // Permutate the board exactly once.
-        permutate();
+        stepGeneration();
     }
 }
 
@@ -201,13 +209,26 @@ function permutate() {
     }
 }
 
+let timestampAfter;
+let timestampBefore;
+let frameTime;
+let previousFrameTime = 0;
+let diffInFrameTime;
+
 function main() {
+    timestampBefore = performance.now();
     drawCells();
     if (cell_permutations_enabled) {
         permutate();
     }
+    timestampAfter = performance.now();
+    frameTime = timestampAfter - timestampBefore;
+    diffInFrameTime = frameTime - previousFrameTime;
+    fpsCounter.textContent=(" | Frame time: " + (frameTime).toString() + "ms (diff: " + diffInFrameTime + "ms)");
+    
 }
 
 let board = generateEmptyBoard();
 
+fpsCounter.textContent=" | Simulation has not been started.";
 setInterval("main()", DELAY_BETWEEN_GENERATIONS_IN_MILLISECONDS);

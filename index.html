@@ -10,7 +10,18 @@
     <input type="button" value="random" onclick="randomBoard();" />
     <input type="button" value="start"  onclick="startGenerations();" />
     <input type="button" value="stop"   onclick="stopGenerations();" />
-    <canvas onmouseup="mouseupevent(event)" onmousedown="mousedownevent(event)" onmousemove="mousemovement(event)" id="myCanvas" width="400" height="400" style="border:1px solid #000000;"></canvas> 
+    <input type="button" value="step"   onclick="stepGeneration();" />
+    <span id="fps"> | Javascript has not been loaded.</span>
+    <hr>
+    <canvas
+        onmouseup="mouseupevent(event)"
+        onmousedown="mousedownevent(event)"
+        onmousemove="mousemovement(event)"
+        id="myCanvas"
+        width="300"
+        height="300"
+        style="border:1px solid #000000;"
+    > </canvas>
     <script src="js/handler.js"></script>
 </body>
 </html>
