@@ -8,7 +8,7 @@ const DELAY_BETWEEN_GENERATIONS_IN_MILLISECONDS = 10;
 
 let inital_generation = true;
 
-const WINDOW_WIDTH_IN_CELLS = canvas.widht / CELL_SIZE
+const WINDOW_WIDTH_IN_CELLS = canvas.width / CELL_SIZE
 const WINDOW_HEIGHT_IN_CELLS = canvas.height / CELL_SIZE
 
 function generateEmptyBoard() {
@@ -29,6 +29,7 @@ function generateEmptyBoard() {
     if (inital_generation) {
         inital_generation = false;
     }
+
     return new_board;
 }
 
@@ -117,6 +118,7 @@ function main() {
 
 let board = generateEmptyBoard();
 
+// manually drawing a glyder
 board[0][1] = true;
 board[1][2] = true;
 board[2][0] = true;
