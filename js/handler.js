@@ -1,5 +1,5 @@
 // Edit these.
-const CELL_SIZE = 2;
+const CELL_SIZE = 10;
 const DELAY_BETWEEN_GENERATIONS_IN_MILLISECONDS = 10;
 
 
