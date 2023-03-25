@@ -7,12 +7,14 @@ var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
 const CELL_ALIVE_STATES = [true, false];
-const RANDOM_START_STATE = true;
+const RANDOM_START_STATE = false;
 const WINDOW_WIDTH_IN_CELLS = canvas.width / CELL_SIZE
 const WINDOW_HEIGHT_IN_CELLS = canvas.height / CELL_SIZE
 
 let cell_permutations_enabled = false;
 let inital_generation = true;
+let mousedown = false;
+let inital_clicked_cell_live_state = false;
 let updated_cells = [];
 
 window.addEventListener("keydown", checkKeyPressed, false);
@@ -34,6 +36,35 @@ function checkKeyPressed(event) {
     }
 }
 
+function getMousePos(canvas, event) {
+    var rect = canvas.getBoundingClientRect();
+    return {
+      x: Math.floor((event.clientX - rect.left) / CELL_SIZE),
+      y: Math.floor((event.clientY - rect.top) / CELL_SIZE)
+    };
+}
+
+function mousedownevent(event) {
+    mousedown = true;
+    var pos = getMousePos(canvas, event);
+    inital_clicked_cell_live_state = board[pos['y']][pos['x']]
+    board[pos['y']][pos['x']] = !inital_clicked_cell_live_state;
+    updated_cells.push(pos['x'], pos['y']);
+    drawCells();
+}
+
+function mouseupevent(event) {
+    mousedown = false;
+}
+
+function mousemovement(event) {
+    if (mousedown) {
+        var pos = getMousePos(canvas, event);
+        board[pos['y']][pos['x']] = !inital_clicked_cell_live_state;
+        updated_cells.push(pos['x'], pos['y']);
+        drawCells();
+    }
+}
 
 function generateEmptyBoard() {
     let new_board = []
