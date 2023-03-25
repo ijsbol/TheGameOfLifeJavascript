@@ -1,6 +1,7 @@
 # TheGameOfLifeJavascript
  The Game of Life but programmed in Javascript
 
+ Before today I have never programmed in Javascript, I hate this.
 ## Controls.
 |Key|Action|
 |--|--|
