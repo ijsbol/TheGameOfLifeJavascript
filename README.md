@@ -1,6 +1,8 @@
 # TheGameOfLifeJavascript
  The Game of Life but programmed in Javascript
 
+ Before today I have never programmed in Javascript, I hate this.
+
 ## Controls
  - Click to change the alive/dead state of a cell.
  - Drag to change the alive/dead state of many cells to the inverse of the state of the first cell you clicked.
