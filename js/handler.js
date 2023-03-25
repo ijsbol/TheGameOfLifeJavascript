@@ -7,7 +7,6 @@ var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
 const CELL_ALIVE_STATES = [true, false];
-const RANDOM_START_STATE = false;
 const WINDOW_WIDTH_IN_CELLS = canvas.width / CELL_SIZE
 const WINDOW_HEIGHT_IN_CELLS = canvas.height / CELL_SIZE
 const ALIVE_CELL_COLOUR = "white";
@@ -15,6 +14,7 @@ const DEAD_CELL_COLOUR = "black";
 
 let cell_permutations_enabled = false;
 let inital_generation = true;
+let random_state = false;
 let mousedown = false;
 let inital_clicked_cell_live_state = false;
 let updated_cells = [];
@@ -31,7 +31,9 @@ function checkKeyPressed(event) {
     } else if (event.keyCode == "82") {
         // Randomly regenerate the entire board if the R key is pressed.
         inital_generation = true;
+        random_state = true;
         board = generateEmptyBoard();
+        drawCells();
     } else if (event.keyCode == "83") {
         // Permutate the board exactly once.
         permutate();
@@ -73,7 +75,7 @@ function generateEmptyBoard() {
     for (let y = 0; y < canvas.height / CELL_SIZE; y++) {
         new_board.push([])
         for (let x = 0; x < canvas.width / CELL_SIZE; x++) {
-            if (RANDOM_START_STATE && inital_generation) {
+            if (random_state && inital_generation) {
                 new_board[y][x] = CELL_ALIVE_STATES[
                     Math.floor(Math.random() * CELL_ALIVE_STATES.length)
                 ];
