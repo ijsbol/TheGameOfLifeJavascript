@@ -10,6 +10,8 @@ const CELL_ALIVE_STATES = [true, false];
 const RANDOM_START_STATE = false;
 const WINDOW_WIDTH_IN_CELLS = canvas.width / CELL_SIZE
 const WINDOW_HEIGHT_IN_CELLS = canvas.height / CELL_SIZE
+const ALIVE_CELL_COLOUR = "white";
+const DEAD_CELL_COLOUR = "black";
 
 let cell_permutations_enabled = false;
 let inital_generation = true;
@@ -91,9 +93,9 @@ function drawCells() {
         for (let y = 0; y < board.length; y++) {
             for (let x = 0; x < board[y].length; x++) {
                 if (board[y][x]) {
-                    ctx.fillStyle = "#000000";
+                    ctx.fillStyle = ALIVE_CELL_COLOUR;
                 } else {
-                    ctx.fillStyle = "#ffffff";
+                    ctx.fillStyle = DEAD_CELL_COLOUR;
                 }
                 ctx.fillRect(x*CELL_SIZE, y*CELL_SIZE, CELL_SIZE, CELL_SIZE);
             }
@@ -105,9 +107,9 @@ function drawCells() {
             let y = updated_cells[i + 1];
 
             if (board[y][x]) {
-                ctx.fillStyle = "#000000";
+                ctx.fillStyle = ALIVE_CELL_COLOUR;
             } else {
-                ctx.fillStyle = "#ffffff";
+                ctx.fillStyle = DEAD_CELL_COLOUR;
             }
             ctx.fillRect(x*CELL_SIZE, y*CELL_SIZE, CELL_SIZE, CELL_SIZE);
         }
