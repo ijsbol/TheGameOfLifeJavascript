@@ -22,8 +22,12 @@ function checkKeyPressed(event) {
         // Enable cell permutations if the space key is pressed.
         cell_permutations_enabled = true;
     } else if (event.keyCode == "9") {
-        // Disaable cell permutations if the tab key is pressed.
+        // Disable cell permutations if the tab key is pressed.
         cell_permutations_enabled = false;
+    } else if (event.keyCode == "82") {
+        // Randomly regenerate the entire board if the R key is pressed.
+        inital_generation = true;
+        board = generateEmptyBoard();
     }
 }
 
