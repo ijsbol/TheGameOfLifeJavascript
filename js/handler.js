@@ -28,6 +28,9 @@ function checkKeyPressed(event) {
         // Randomly regenerate the entire board if the R key is pressed.
         inital_generation = true;
         board = generateEmptyBoard();
+    } else if (event.keyCode == "83") {
+        // Permutate the board exactly once.
+        permutate();
     }
 }
 
