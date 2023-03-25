@@ -1,15 +1,18 @@
+// Edit these.
+const CELL_SIZE = 2;
+const DELAY_BETWEEN_GENERATIONS_IN_MILLISECONDS = 10;
+
+
 var canvas = document.getElementById("myCanvas");
 var ctx = canvas.getContext("2d");
 
-const CELL_SIZE = 10;
 const CELL_ALIVE_STATES = [true, false];
-const RANDOM_START_STATE = false;
-const DELAY_BETWEEN_GENERATIONS_IN_MILLISECONDS = 10;
-
-let inital_generation = true;
-
+const RANDOM_START_STATE = true;
 const WINDOW_WIDTH_IN_CELLS = canvas.width / CELL_SIZE
 const WINDOW_HEIGHT_IN_CELLS = canvas.height / CELL_SIZE
+
+let inital_generation = true;
+let updated_cells;
 
 function generateEmptyBoard() {
     let new_board = []
@@ -26,18 +29,30 @@ function generateEmptyBoard() {
         }
     }
 
-    if (inital_generation) {
-        inital_generation = false;
-    }
-
     return new_board;
 }
 
 function drawCells() {
-    for (let y = 0; y < board.length; y++) {
-        for (let x = 0; x < board[y].length; x++) {
-            let cell_state = board[y][x];
-            if (cell_state) {
+    if (inital_generation) {
+        // Initial generation.
+        inital_generation = false;
+        for (let y = 0; y < board.length; y++) {
+            for (let x = 0; x < board[y].length; x++) {
+                if (board[y][x]) {
+                    ctx.fillStyle = "#000000";
+                } else {
+                    ctx.fillStyle = "#ffffff";
+                }
+                ctx.fillRect(x*CELL_SIZE, y*CELL_SIZE, CELL_SIZE, CELL_SIZE);
+            }
+        }
+    } else {
+        // Every other generation.
+        for (let i = 0; i < updated_cells.length; i += 2) {
+            let x = updated_cells[i];
+            let y = updated_cells[i + 1];
+
+            if (board[y][x]) {
                 ctx.fillStyle = "#000000";
             } else {
                 ctx.fillStyle = "#ffffff";
@@ -82,33 +97,40 @@ function findSurroundingCells(x, y) {
 }
 
 function permutate() {
-    let temp_board = generateEmptyBoard();
-    for (let y = 0; y < temp_board.length; y++) {
-        for (let x = 0; x < temp_board[y].length; x++) {
+    updated_cells = [];
+    for (let y = 0; y < board.length; y++) {
+        for (let x = 0; x < board[y].length; x++) {
             let surroundingCellCount = findSurroundingCells(x, y);
             if (board[y][x]) {
                 // Current cell is live.
                 if (surroundingCellCount < 2) {
                     // A live cell dies if it has fewer than two live neighbors.
-                    // temp_board[y][x] = false
+                    updated_cells.push(x, y);
                 } else if (surroundingCellCount == 2 || surroundingCellCount == 3) {
                     // A live cell with two or three live neighbors lives on to the next generation.
-                    temp_board[y][x] = true
                 } else if (surroundingCellCount > 3) {
                     // A live cell with more than three live neighbors dies.
-                    // temp_board[y][x] = false
+                    updated_cells.push(x, y);
                 }
             } else {
                 // Current cell is dead
                 if (surroundingCellCount == 3) {
                     // A dead cell will be brought back to live if it has exactly three live neighbors.
-                    temp_board[y][x] = true
+                    updated_cells.push(x, y);
                 }
             }
         }
     }
 
-    board = temp_board;
+    for (let i = 0; i < updated_cells.length; i+=2) {
+        let x = updated_cells[i];
+        let y = updated_cells[i + 1];
+        if (board[y][x]) {
+            board[y][x] = false;
+        } else {
+            board[y][x] = true;
+        }
+    }
 }
 
 function main() {
@@ -117,12 +139,5 @@ function main() {
 }
 
 let board = generateEmptyBoard();
-
-// manually drawing a glyder
-board[0][1] = true;
-board[1][2] = true;
-board[2][0] = true;
-board[2][1] = true;
-board[2][2] = true;
 
 setInterval("main()", DELAY_BETWEEN_GENERATIONS_IN_MILLISECONDS);
