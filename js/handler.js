@@ -44,6 +44,13 @@ function stepGeneration() {
     permutate();
 }
 
+function clearBoard() {
+    inital_generation = true;
+    random_state = false;
+    board = generateEmptyBoard();
+    drawCells();
+}
+
 function checkKeyPressed(event) {
     if (event.keyCode == "32") {
         // Enable cell permutations if the space key is pressed.
@@ -57,6 +64,9 @@ function checkKeyPressed(event) {
     } else if (event.keyCode == "83") {
         // Permutate the board exactly once.
         stepGeneration();
+    } else if (event.keyCode == "67") {
+        // Clearn the board if the "C" key is pressed.
+        clearBoard();
     }
 }
 

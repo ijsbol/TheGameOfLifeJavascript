@@ -14,6 +14,7 @@
 |`TAB KEY`|Pauses the simulation.|
 |`R KEY`|Randomly regenerates the entire board.|
 |`S KEY`|Permutates the board by one generation.|
+|`C KEY`|Clears the board.|
 
 ## Demo
 ![img](https://i.imgur.com/OqB16YX.gif)
